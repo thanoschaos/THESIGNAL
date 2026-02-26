@@ -1,192 +1,190 @@
-import ScoreRing from "@/components/ScoreRing";
-import CategoryCard from "@/components/CategoryCard";
-import LiveFeed from "@/components/LiveFeed";
-import BriefCard from "@/components/BriefCard";
-import TacticalBoard from "@/components/TacticalBoard";
-import Heatmap from "@/components/Heatmap";
-import ProgressMetrics from "@/components/ProgressMetrics";
-import { mockCategories, mockLiveEvents, mockBrief, getCompositeScore } from "@/lib/mock-data";
+"use client";
+
+import MetricCard from "@/components/MetricCard";
+import ScoreChart from "@/components/ScoreChart";
+import DonutChart from "@/components/DonutChart";
+import ProgressList from "@/components/ProgressList";
+import InsightsFeed from "@/components/InsightsFeed";
+import { mockCategories, mockLiveEvents, getCompositeScore } from "@/lib/mock-data";
 
 export default function Home() {
   const compositeScore = getCompositeScore(mockCategories);
 
   return (
-    <div className="min-h-screen bg-[#070d18] pitch-grid relative z-10 pb-6">
+    <div className="min-h-screen bg-[#0f1117] flex">
       {/* Sidebar */}
-      <aside className="fixed left-0 top-0 bottom-6 w-[52px] bg-[#050a14] border-r border-[#1e293b] z-50 flex flex-col items-center py-4">
-        <div className="w-7 h-7 rounded-[2px] bg-[#d4af37] flex items-center justify-center mb-6">
-          <span className="text-[#050a14] font-heading text-[10px]">S</span>
+      <aside className="w-[220px] bg-[#0a0c10] border-r border-[#23262f] flex flex-col fixed top-0 bottom-0 left-0 z-50">
+        {/* Logo */}
+        <div className="px-5 py-5 flex items-center gap-3 border-b border-[#23262f]">
+          <div className="w-8 h-8 rounded-lg bg-[#4f6ef7] flex items-center justify-center">
+            <span className="text-white font-bold text-[13px]">📡</span>
+          </div>
+          <span className="text-[15px] font-bold text-white">The Signal</span>
         </div>
 
-        <nav className="flex flex-col items-center gap-1 flex-1">
+        {/* Search */}
+        <div className="px-4 py-3">
+          <div className="bg-[#161921] border border-[#23262f] rounded-lg px-3 py-2 flex items-center gap-2">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="6" cy="6" r="4.5" stroke="#6b6f7e" strokeWidth="1.5"/><path d="M10 10L13 13" stroke="#6b6f7e" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            <span className="text-[12px] text-[#6b6f7e]">Search</span>
+            <span className="text-[10px] text-[#6b6f7e] ml-auto bg-[#0a0c10] rounded px-1.5 py-0.5">⌘F</span>
+          </div>
+        </div>
+
+        {/* Nav sections */}
+        <nav className="flex-1 px-3 py-2">
+          <p className="text-[10px] font-semibold text-[#6b6f7e] uppercase tracking-wider px-3 mb-2">General</p>
           {[
-            { icon: "◉", active: true, label: "DASHBOARD" },
-            { icon: "◈", active: false, label: "BRIEFS" },
-            { icon: "⚡", active: false, label: "ALERTS" },
-            { icon: "◎", active: false, label: "DATA" },
-            { icon: "⚙", active: false, label: "SETTINGS" },
+            { icon: "📊", label: "Dashboard", active: true },
+            { icon: "📋", label: "Briefs", active: false },
+            { icon: "🔍", label: "Analysis", active: false },
+            { icon: "📡", label: "Live Feed", active: false },
           ].map((item) => (
             <button
               key={item.label}
-              className={`w-10 h-10 flex items-center justify-center rounded-[2px] text-sm transition-all ${
+              className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-[13px] transition-all ${
                 item.active
-                  ? "bg-[#1a2a4a] border-l-[3px] border-l-[#d4af37] text-[#d4af37]"
-                  : "text-[#64748b] hover:text-[#94a3b8] hover:bg-[#0c1425]"
+                  ? "sidebar-active font-semibold"
+                  : "text-[#a0a3b1] hover:bg-[#161921] hover:text-white"
               }`}
-              title={item.label}
             >
-              {item.icon}
+              <span className="text-[14px]">{item.icon}</span>
+              {item.label}
+            </button>
+          ))}
+
+          <p className="text-[10px] font-semibold text-[#6b6f7e] uppercase tracking-wider px-3 mb-2 mt-6">Data</p>
+          {[
+            { icon: "🐋", label: "Smart Money" },
+            { icon: "🎰", label: "DegenFi" },
+            { icon: "💰", label: "Yields" },
+          ].map((item) => (
+            <button
+              key={item.label}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-[13px] text-[#a0a3b1] hover:bg-[#161921] hover:text-white transition-all"
+            >
+              <span className="text-[14px]">{item.icon}</span>
+              {item.label}
+              <svg className="ml-auto" width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M4 3L7 6L4 9" stroke="#6b6f7e" strokeWidth="1.5" strokeLinecap="round"/></svg>
+            </button>
+          ))}
+
+          <p className="text-[10px] font-semibold text-[#6b6f7e] uppercase tracking-wider px-3 mb-2 mt-6">Support</p>
+          {[
+            { icon: "⚙️", label: "Settings" },
+            { icon: "❓", label: "Help Center" },
+          ].map((item) => (
+            <button
+              key={item.label}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-[13px] text-[#a0a3b1] hover:bg-[#161921] hover:text-white transition-all"
+            >
+              <span className="text-[14px]">{item.icon}</span>
+              {item.label}
             </button>
           ))}
         </nav>
-
-        <div className="w-8 h-8 rounded-[2px] bg-[#1a2a4a] border border-[#1e293b] flex items-center justify-center">
-          <span className="font-data text-[9px] text-[#d4af37] font-bold">K</span>
-        </div>
       </aside>
 
       {/* Main content */}
-      <div className="ml-[52px]">
-        {/* Control Header */}
-        <header className="h-12 bg-[#050a14] border-b border-[#1e293b] flex items-center justify-between px-5 sticky top-0 z-40">
+      <div className="ml-[220px] flex-1">
+        {/* Top header */}
+        <header className="h-16 border-b border-[#23262f] flex items-center justify-between px-8 sticky top-0 bg-[#0f1117]/80 backdrop-blur-xl z-40">
+          <h1 className="text-[20px] font-bold text-white">Dashboard</h1>
+
           <div className="flex items-center gap-3">
-            <span className="font-heading text-[9px] tracking-[0.15em] text-[#64748b]">HOME</span>
-            <span className="text-[#1e293b]">/</span>
-            <span className="font-heading text-[9px] tracking-[0.15em] text-[#d4af37]">DASHBOARD</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="bg-[#111d35] border border-[#1e293b] rounded-[2px] px-3 py-1.5 w-48 flex items-center gap-2">
-              <span className="text-[#64748b] text-[10px]">⌕</span>
-              <span className="font-ui text-[9px] text-[#475569]">SEARCH TOKENS...</span>
+            {/* Tabs */}
+            <div className="flex items-center gap-0 mr-4">
+              {["SIGNAL METRICS", "CATEGORY ANALYSIS", "LIVE FEED"].map((tab, i) => (
+                <button
+                  key={tab}
+                  className={`px-4 py-4 text-[11px] font-semibold tracking-wide transition-all ${
+                    i === 0 ? "tab-active" : "text-[#6b6f7e] hover:text-[#a0a3b1] border-b-2 border-transparent"
+                  }`}
+                >
+                  {tab}
+                </button>
+              ))}
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-[6px] h-[6px] rounded-full bg-[#22c55e] status-live" />
-              <span className="font-data text-[8px] font-bold text-[#22c55e]">ONLINE</span>
-              <span className="font-data text-[8px] text-[#475569] ml-1">12MS</span>
-            </div>
-            <button className="btn-gold px-4 py-1.5 text-[9px] flex items-center gap-1.5">
-              <span>▶</span> SUBSCRIBE
+
+            {/* Date range */}
+            <button className="flex items-center gap-2 text-[12px] text-[#a0a3b1] bg-[#161921] border border-[#23262f] rounded-lg px-3 py-2 hover:border-[#2a2d38] transition-colors">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="2" width="12" height="10" rx="2" stroke="currentColor" strokeWidth="1.3"/><path d="M1 5h12M4 1v2M10 1v2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
+              Feb 21 - Feb 25
             </button>
+
+            <button className="text-[12px] text-[#a0a3b1] bg-[#161921] border border-[#23262f] rounded-lg px-3 py-2 hover:border-[#2a2d38] transition-colors">
+              Monthly ↓
+            </button>
+
+            <button className="text-[12px] text-[#a0a3b1] bg-[#161921] border border-[#23262f] rounded-lg px-3 py-2 hover:border-[#2a2d38] transition-colors flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M4 7h6M6 10h2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/></svg>
+              Filter
+            </button>
+
+            <button className="text-[12px] text-[#a0a3b1] bg-[#161921] border border-[#23262f] rounded-lg px-3 py-2 hover:border-[#2a2d38] transition-colors flex items-center gap-1.5">
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v10M2 7l5 5 5-5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              Export
+            </button>
+
+            {/* Notification + Profile */}
+            <div className="flex items-center gap-3 ml-2 pl-4 border-l border-[#23262f]">
+              <button className="w-9 h-9 rounded-lg bg-[#161921] border border-[#23262f] flex items-center justify-center text-[#a0a3b1] hover:text-white transition-colors">
+                🔔
+              </button>
+              <div className="flex items-center gap-2.5">
+                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#4f6ef7] to-[#a78bfa] flex items-center justify-center">
+                  <span className="text-white font-bold text-[12px]">K</span>
+                </div>
+                <div>
+                  <p className="text-[12px] font-semibold text-white leading-tight">Koko</p>
+                  <p className="text-[10px] text-[#6b6f7e]">Pro</p>
+                </div>
+              </div>
+            </div>
           </div>
         </header>
 
-        {/* Context Banner */}
-        <section className="h-24 bg-gradient-to-r from-[#070d18] via-[#0f1a30] to-[#1a2a4a] border-b border-[#1e293b] px-6 flex items-center justify-between relative overflow-hidden">
-          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-[#d4af3710] to-transparent" />
-          <div className="flex items-center gap-5 relative z-10">
-            <ScoreRing score={compositeScore} size={72} strokeWidth={3} change={4} />
-            <div>
-              <h1 className="font-heading text-[20px] tracking-tight text-white leading-none mb-1">THE SIGNAL</h1>
-              <p className="font-ui text-[9px] text-[#64748b] uppercase tracking-wider">COMPOSITE MARKET INTELLIGENCE · UPDATED 3-5× DAILY</p>
-            </div>
+        {/* Content */}
+        <main className="p-6">
+          {/* Top metric cards — 3 main + 1 progress list */}
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            <MetricCard category={mockCategories[2]} />
+            <MetricCard category={mockCategories[3]} />
+            <MetricCard category={mockCategories[1]} />
+            <ProgressList />
           </div>
-          <div className="flex items-center gap-0 relative z-10 self-end">
-            {["OVERVIEW", "ANALYSIS", "HISTORY", "SETTINGS"].map((tab, i) => (
-              <button key={tab} className={`px-4 py-2.5 font-heading text-[9px] tracking-[0.12em] transition-all ${
-                i === 0 ? "tab-active text-[#d4af37]" : "text-[#475569] hover:text-[#94a3b8] border-b-2 border-transparent"
-              }`}>{tab}</button>
-            ))}
-          </div>
-        </section>
 
-        <main className="px-5 py-5">
-          {/* Category score pills */}
-          <div className="flex items-center gap-2 mb-5">
-            {mockCategories.map((cat) => {
-              const color = cat.score >= 70 ? "#d4af37" : cat.score >= 50 ? "#06b6d4" : "#ef4444";
-              return (
-                <div key={cat.name} className="card px-3 py-2 flex items-center gap-2">
-                  <span className="text-xs">{cat.emoji}</span>
-                  <span className="font-heading text-[7px] tracking-[0.12em] text-[#64748b]">{cat.name.toUpperCase()}</span>
-                  <span className="font-data text-[11px] font-bold" style={{ color }}>{cat.score}</span>
-                  <span className={`font-data text-[7px] font-bold ${cat.change >= 0 ? "text-[#22c55e]" : "text-[#ef4444]"}`}>
-                    {cat.change >= 0 ? "▲" : "▼"}{Math.abs(cat.change)}
-                  </span>
+          {/* Middle row: Bar chart + Donut */}
+          <div className="grid grid-cols-4 gap-4 mb-4">
+            <div className="col-span-3">
+              <ScoreChart />
+            </div>
+            <DonutChart />
+          </div>
+
+          {/* Bottom row: More metric cards + Live insights */}
+          <div className="grid grid-cols-4 gap-4">
+            <div className="col-span-2 grid grid-cols-2 gap-4">
+              <MetricCard category={mockCategories[0]} />
+              <MetricCard category={mockCategories[4]} />
+              <MetricCard category={mockCategories[5]} />
+              <div className="card p-5">
+                <h3 className="text-[14px] font-semibold text-white mb-3">Composite Score</h3>
+                <p className="text-[11px] text-[#6b6f7e] mb-4">Overall market intelligence</p>
+                <div className="flex items-end gap-3 mb-4">
+                  <span className="text-5xl font-bold text-white">{compositeScore}</span>
+                  <span className="badge-green text-[12px] font-semibold px-2.5 py-1 mb-1.5">+4%</span>
                 </div>
-              );
-            })}
-          </div>
-
-          {/* Brief */}
-          <div className="mb-5">
-            <BriefCard brief={mockBrief} />
-          </div>
-
-          {/* Main 12-col grid: Tactical (4) + Data (5) + Standings (3) */}
-          <div className="grid grid-cols-12 gap-4 mb-5">
-            {/* Left column — Tactical Analysis */}
-            <div className="col-span-4 space-y-4">
-              <TacticalBoard />
-              <LiveFeed events={mockLiveEvents.slice(0, 5)} />
-            </div>
-
-            {/* Center column — Data Hub */}
-            <div className="col-span-5 space-y-4">
-              {/* Top row: 2 category cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <CategoryCard category={mockCategories[0]} />
-                <CategoryCard category={mockCategories[1]} />
-              </div>
-              {/* Heatmap */}
-              <Heatmap />
-              {/* Bottom row: 2 category cards */}
-              <div className="grid grid-cols-2 gap-4">
-                <CategoryCard category={mockCategories[2]} />
-                <CategoryCard category={mockCategories[3]} />
+                <p className="text-[11px] text-[#6b6f7e] leading-relaxed">
+                  Weighted average of 6 categories. Smart Money (25%) is the heaviest signal, followed by Sentiment (20%) and Onchain Activity (18%).
+                </p>
               </div>
             </div>
-
-            {/* Right column — Standings/Metrics */}
-            <div className="col-span-3 space-y-4">
-              <ProgressMetrics />
-              <CategoryCard category={mockCategories[4]} />
-              <CategoryCard category={mockCategories[5]} />
-
-              {/* Tactical Insights ticker */}
-              <div className="card p-4">
-                <h3 className="font-heading text-[10px] tracking-[0.15em] text-[#cbd5e1] mb-3">TACTICAL INSIGHTS</h3>
-                <div className="space-y-2">
-                  {[
-                    { color: "border-l-[#d4af37]", text: "WHALE ACCUMULATION AT 2-WEEK HIGH — EXCHANGE OUTFLOWS ACCELERATING" },
-                    { color: "border-l-[#22c55e]", text: "PUMP.FUN GRADUATION RATE 1.8% — DEGEN SENTIMENT RETURNING" },
-                    { color: "border-l-[#ef4444]", text: "BTC FUNDING RATE ELEVATED — OVERLEVERAGED LONGS AT RISK" },
-                    { color: "border-l-[#06b6d4]", text: "FRESH $240M USDC MINTED — NEW CAPITAL ENTERING SYSTEM" },
-                  ].map((item, i) => (
-                    <div key={i} className={`border-l-2 ${item.color} bg-[#050a14] pl-3 py-2 rounded-[1px]`}>
-                      <span className="font-data text-[8px] text-[#94a3b8] leading-relaxed">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            <div className="col-span-2">
+              <InsightsFeed events={mockLiveEvents} />
             </div>
           </div>
         </main>
-      </div>
-
-      {/* System Footer Bar — fixed 24px gold bar */}
-      <div className="fixed bottom-0 left-0 right-0 h-6 system-bar flex items-center justify-between px-5 z-50">
-        <div className="flex items-center gap-5">
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5" stroke="#050a14" strokeWidth="1.5"/><path d="M7 4v3l2 1" stroke="#050a14" strokeWidth="1.5" strokeLinecap="round"/></svg>
-            <span>{new Date().toISOString().slice(0, 19).replace('T', ' ')} UTC</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="6" width="2" height="6" fill="#050a14"/><rect x="6" y="3" width="2" height="9" fill="#050a14"/><rect x="10" y="1" width="2" height="11" fill="#050a14"/></svg>
-            <span>SERVER LOAD: 23%</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="3" width="12" height="8" rx="1" stroke="#050a14" strokeWidth="1.5"/><line x1="1" y1="6" x2="13" y2="6" stroke="#050a14" strokeWidth="1"/></svg>
-            <span>DB V2.4.1</span>
-          </div>
-        </div>
-        <div className="flex items-center gap-5">
-          <span>API CALLS: 2,847 / 5,000</span>
-          <span>LATENCY: 12MS</span>
-          <div className="flex items-center gap-1.5">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="3" fill="#050a14"/><circle cx="7" cy="7" r="5.5" stroke="#050a14" strokeWidth="1"/></svg>
-            <span>V0.1.0-MVP</span>
-          </div>
-        </div>
       </div>
     </div>
   );
