@@ -16,7 +16,7 @@ const typeConfig = {
 
 export default function InsightsFeed({ events }: { events: Event[] }) {
   return (
-    <div className="card p-5">
+    <div className="card p-5 hover-lift">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-[14px] font-semibold text-white">Live insights</h3>
         <div className="flex items-center gap-1.5">

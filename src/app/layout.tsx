@@ -3,7 +3,36 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "THE SIGNAL — AI Market Intelligence",
-  description: "AI-curated crypto market analysis delivered 3-5x daily.",
+  description: "AI-powered crypto market intelligence dashboard. Real-time DeFi analysis, on-chain signals, and market sentiment tracking.",
+  keywords: ["crypto", "DeFi", "market intelligence", "blockchain", "on-chain analysis", "AI"],
+  authors: [{ name: "The Signal Team" }],
+  openGraph: {
+    title: "THE SIGNAL — AI Market Intelligence",
+    description: "AI-powered crypto market intelligence dashboard. Real-time DeFi analysis, on-chain signals, and market sentiment tracking.",
+    url: "https://the-signal.vercel.app",
+    siteName: "The Signal",
+    images: [
+      {
+        url: "/og-image.png", // placeholder
+        width: 1200,
+        height: 630,
+        alt: "The Signal Dashboard",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "THE SIGNAL — AI Market Intelligence",
+    description: "AI-powered crypto market intelligence dashboard",
+    images: ["/og-image.png"], // placeholder
+  },
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

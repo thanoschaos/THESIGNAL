@@ -16,7 +16,7 @@ const colors: Record<string, string> = {
 
 export default function ProgressList({ items }: ProgressListProps) {
   return (
-    <div className="card p-5">
+    <div className="card p-5 hover-lift">
       <div className="flex items-center justify-between mb-5">
         <h3 className="text-[14px] font-semibold text-white">Category rankings</h3>
       </div>

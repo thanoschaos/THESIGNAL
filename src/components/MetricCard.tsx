@@ -21,7 +21,7 @@ export default function MetricCard({ category, bigValue }: MetricCardProps) {
   const isPositive = category.change >= 0;
 
   return (
-    <div className="card p-5">
+    <div className="card p-5 hover-lift">
       <div className="flex items-center gap-2 mb-1">
         <div className="w-8 h-8 rounded-[10px] flex items-center justify-center" style={{ background: `${category.color}18` }}>
           <span className="text-sm">{category.emoji}</span>
@@ -52,7 +52,7 @@ export default function MetricCard({ category, bigValue }: MetricCardProps) {
 
       <div className="flex items-end gap-3">
         <span className="text-3xl font-bold text-white">{bigValue || category.score}</span>
-        {category.change !== 0 && (
+        {category.change !== undefined && category.change !== 0 && (
           <span className={`text-[12px] font-semibold px-2 py-0.5 rounded-full ${isPositive ? "badge-green" : "badge-red"}`}>
             {isPositive ? "+" : ""}{category.change.toFixed(1)}%
           </span>

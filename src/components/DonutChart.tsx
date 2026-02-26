@@ -8,11 +8,11 @@ interface DonutChartProps {
 
 export default function DonutChart({ data }: DonutChartProps) {
   return (
-    <div className="card p-5">
+    <div className="card p-5 hover-lift">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h3 className="text-[14px] font-semibold text-white">Score distribution</h3>
-          <p className="text-[11px] text-[#6b6f7e] mt-0.5">By category weight</p>
+          <h3 className="text-[14px] font-semibold text-white">Composite Weight</h3>
+          <p className="text-[11px] text-[#6b6f7e] mt-0.5">Category contribution</p>
         </div>
       </div>
 
@@ -34,7 +34,7 @@ export default function DonutChart({ data }: DonutChartProps) {
             <div key={item.name} className="flex items-center gap-2.5">
               <div className="w-2 h-2 rounded-full" style={{ background: item.color }} />
               <span className="text-[12px] text-[#a0a3b1] flex-1">{item.name}</span>
-              <span className="text-[12px] text-white font-medium">{item.value}</span>
+              <span className="text-[12px] text-white font-medium">{item.value}%</span>
             </div>
           ))}
         </div>

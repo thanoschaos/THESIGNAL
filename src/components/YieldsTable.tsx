@@ -17,7 +17,7 @@ export default function YieldsTable({ yields }: YieldsTableProps) {
   if (!yields) return <div className="card p-5"><p className="text-[#6b6f7e]">Loading yields...</p></div>;
 
   return (
-    <div className="card p-5">
+    <div className="card p-5 hover-lift">
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-[14px] font-semibold text-white">Top Yields</h3>
         <div className="flex items-center gap-2">
