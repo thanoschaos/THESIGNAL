@@ -128,6 +128,71 @@ body {
   color: var(--gold);
 }
 
+/* System footer bar */
+.system-bar {
+  background: var(--gold);
+  color: var(--bg-sidebar);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* Tactical pitch board */
+.pitch-bg {
+  background: linear-gradient(135deg, #1a2a4a, #111d35);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  position: relative;
+  overflow: hidden;
+}
+.pitch-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 20px 20px;
+  pointer-events: none;
+}
+
+/* Pitch markers */
+.pitch-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold-glow);
+  position: absolute;
+}
+
+/* Activity heatmap */
+.heat-cell {
+  width: 12px;
+  height: 12px;
+  background: var(--gold);
+  border-radius: 0;
+}
+.heat-10 { opacity: 0.1; }
+.heat-40 { opacity: 0.4; }
+.heat-70 { opacity: 0.7; }
+.heat-100 { opacity: 1; box-shadow: 0 0 8px var(--gold); }
+
+/* FM-style progress bar */
+.fm-progress {
+  height: 4px;
+  background: var(--border);
+  border-radius: 0;
+}
+.fm-progress-fill {
+  height: 100%;
+  border-radius: 0;
+}
+.fm-progress-gold { background: var(--gold); }
+.fm-progress-green { background: var(--green); }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-track { background: var(--bg-sidebar); }
