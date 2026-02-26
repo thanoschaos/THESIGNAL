@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #16161f;
+  --bg-card-hover: #1c1c28;
+  --border: #2a2a3a;
+  --text-primary: #e8e8ed;
+  --text-secondary: #8888a0;
+  --accent-green: #00ff88;
+  --accent-red: #ff4466;
+  --accent-yellow: #ffaa00;
+  --accent-blue: #4488ff;
+  --accent-purple: #aa44ff;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Score ring animation */
+@keyframes score-fill {
+  from { stroke-dashoffset: 283; }
+}
+
+/* Pulse glow for live indicator */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(0, 255, 136, 0.6); }
+  50% { opacity: 0.6; box-shadow: 0 0 16px rgba(0, 255, 136, 0.8); }
+}
+
+.live-dot {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Card hover effect */
+.signal-card {
+  transition: all 0.2s ease;
+  border: 1px solid var(--border);
+}
+.signal-card:hover {
+  border-color: rgba(0, 255, 136, 0.3);
+  background: var(--bg-card-hover);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
