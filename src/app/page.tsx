@@ -8,113 +8,157 @@ export default function Home() {
   const compositeScore = getCompositeScore(mockCategories);
 
   return (
-    <div className="min-h-screen bg-[#050505] grid-bg scanline">
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#050505]/90 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-7 h-7 rounded-[2px] bg-gradient-to-br from-[#00f2ff] to-[#ff00e5] flex items-center justify-center">
-              <span className="text-black font-black text-[10px]">S</span>
-            </div>
-            <span className="font-tech text-[11px] tracking-[0.3em] text-white uppercase">THE SIGNAL</span>
-          </div>
+    <div className="min-h-screen bg-[#070d18] pitch-grid relative z-10">
+      {/* Sidebar */}
+      <aside className="fixed left-0 top-0 bottom-0 w-[52px] bg-[#050a14] border-r border-[#1e293b] z-50 flex flex-col items-center py-4">
+        {/* Logo */}
+        <div className="w-7 h-7 rounded-[2px] bg-[#d4af37] flex items-center justify-center mb-6">
+          <span className="text-[#050a14] font-heading text-[10px]">S</span>
+        </div>
 
-          {/* Nav pills */}
-          <div className="glass rounded-[4px] px-1 py-1 flex items-center gap-0.5">
-            {["DASHBOARD", "BRIEFS", "ALERTS", "SETTINGS"].map((item, i) => (
-              <button
-                key={item}
-                className={`font-tech text-[9px] tracking-[0.2em] px-4 py-1.5 rounded-[2px] transition-all uppercase ${
-                  i === 0
-                    ? "bg-white text-black shadow-[0_0_12px_rgba(255,255,255,0.15)]"
-                    : "text-white/50 hover:text-white"
-                }`}
-              >
-                {item}
-              </button>
-            ))}
+        {/* Nav icons */}
+        <nav className="flex flex-col items-center gap-1 flex-1">
+          {[
+            { icon: "◉", active: true, label: "DASHBOARD" },
+            { icon: "◈", active: false, label: "BRIEFS" },
+            { icon: "⚡", active: false, label: "ALERTS" },
+            { icon: "◎", active: false, label: "DATA" },
+            { icon: "⚙", active: false, label: "SETTINGS" },
+          ].map((item) => (
+            <button
+              key={item.label}
+              className={`w-10 h-10 flex items-center justify-center rounded-[2px] text-sm transition-all ${
+                item.active
+                  ? "bg-[#1a2a4a] border-l-[3px] border-l-[#d4af37] text-[#d4af37]"
+                  : "text-[#64748b] hover:text-[#94a3b8] hover:bg-[#0c1425]"
+              }`}
+              title={item.label}
+            >
+              {item.icon}
+            </button>
+          ))}
+        </nav>
+
+        {/* User */}
+        <div className="w-8 h-8 rounded-[2px] bg-[#1a2a4a] border border-[#1e293b] flex items-center justify-center">
+          <span className="font-data text-[9px] text-[#d4af37] font-bold">K</span>
+        </div>
+      </aside>
+
+      {/* Main content */}
+      <div className="ml-[52px]">
+        {/* Control Header */}
+        <header className="h-12 bg-[#050a14] border-b border-[#1e293b] flex items-center justify-between px-5 sticky top-0 z-40">
+          <div className="flex items-center gap-3">
+            <span className="font-heading text-[9px] tracking-[0.15em] text-[#64748b]">HOME</span>
+            <span className="text-[#1e293b]">/</span>
+            <span className="font-heading text-[9px] tracking-[0.15em] text-[#d4af37]">DASHBOARD</span>
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#adff00] pulse-live" />
-              <span className="font-tech text-[9px] tracking-[0.2em] text-[#adff00] uppercase">ONLINE</span>
-              <span className="font-mono text-[9px] tracking-[0.15em] text-white/30 ml-1">24MS</span>
+            {/* Search */}
+            <div className="bg-[#111d35] border border-[#1e293b] rounded-[2px] px-3 py-1.5 w-48 flex items-center gap-2">
+              <span className="text-[#64748b] text-[10px]">⌕</span>
+              <span className="font-ui text-[9px] text-[#475569]">SEARCH TOKENS...</span>
             </div>
-            <button className="glass rounded-[4px] px-4 py-2 font-tech text-[9px] tracking-[0.2em] text-[#00f2ff] border-[#00f2ff]/30 hover:bg-[#00f2ff]/10 hover:shadow-[0_0_20px_rgba(0,242,255,0.15)] transition-all uppercase">
-              SUBSCRIBE
+
+            {/* Status */}
+            <div className="flex items-center gap-1.5">
+              <div className="w-[6px] h-[6px] rounded-full bg-[#22c55e] status-live" />
+              <span className="font-data text-[8px] font-bold text-[#22c55e]">ONLINE</span>
+              <span className="font-data text-[8px] text-[#475569] ml-1">12MS</span>
+            </div>
+
+            <button className="btn-gold px-4 py-1.5 text-[9px] flex items-center gap-1.5">
+              <span>▶</span> SUBSCRIBE
             </button>
           </div>
-        </div>
-      </nav>
+        </header>
 
-      <main className="max-w-7xl mx-auto px-6 pt-24 pb-12">
-        {/* Breadcrumb */}
-        <div className="flex items-center gap-2 mb-2">
-          <span className="font-tech text-[9px] tracking-[0.2em] text-white/30 uppercase">HOME</span>
-          <span className="text-white/15 text-[10px]">›</span>
-          <span className="font-tech text-[9px] tracking-[0.2em] text-white/50 uppercase">DASHBOARD</span>
-        </div>
+        {/* Context Banner */}
+        <section className="h-24 bg-gradient-to-r from-[#070d18] via-[#0f1a30] to-[#1a2a4a] border-b border-[#1e293b] px-6 flex items-center justify-between relative overflow-hidden">
+          {/* Gold tint overlay on right */}
+          <div className="absolute right-0 top-0 bottom-0 w-1/3 bg-gradient-to-l from-[#d4af3710] to-transparent" />
 
-        {/* Hero */}
-        <section className="flex items-start justify-between mb-16">
-          <div>
-            <h1 className="text-5xl font-display neon-gradient leading-tight mb-2 uppercase">
-              MARKET SIGNAL
-            </h1>
-            <p className="text-[11px] text-white/50 font-mono max-w-md leading-relaxed uppercase tracking-wide">
-              COMPOSITE SCORE FROM 6 ONCHAIN &amp; OFFCHAIN CATEGORIES. AI-CURATED ANALYSIS UPDATED 3-5× DAILY.
-            </p>
-          </div>
+          <div className="flex items-center gap-5 relative z-10">
+            {/* Score ring */}
+            <ScoreRing score={compositeScore} size={72} strokeWidth={3} change={4} />
 
-          <div className="flex items-center gap-10">
-            <ScoreRing score={compositeScore} size={160} strokeWidth={5} change={4} />
-
-            <div className="grid grid-cols-2 gap-2">
-              {mockCategories.map((cat) => {
-                const color = cat.score >= 70 ? "#adff00" : cat.score >= 50 ? "#00f2ff" : "#ff00e5";
-                return (
-                  <div key={cat.name} className="glass px-3 py-2 flex items-center gap-2.5 min-w-[160px]">
-                    <span className="text-sm">{cat.emoji}</span>
-                    <span className="font-tech text-[8px] tracking-[0.15em] text-white/50 flex-1 uppercase">{cat.name}</span>
-                    <span className="font-mono text-sm font-bold" style={{ color }}>{cat.score}</span>
-                    <span className={`font-tech text-[8px] uppercase ${cat.change >= 0 ? "text-[#adff00]" : "text-[#ff00e5]"}`}>
-                      {cat.change >= 0 ? "▲" : "▼"}{Math.abs(cat.change)}
-                    </span>
-                  </div>
-                );
-              })}
+            <div>
+              <h1 className="font-heading text-[20px] tracking-tight text-white leading-none mb-1">
+                THE SIGNAL
+              </h1>
+              <p className="font-ui text-[9px] text-[#64748b] uppercase tracking-wider">
+                COMPOSITE MARKET INTELLIGENCE · UPDATED 3-5× DAILY
+              </p>
             </div>
           </div>
-        </section>
 
-        {/* Brief */}
-        <section className="mb-10">
-          <BriefCard brief={mockBrief} />
-        </section>
-
-        {/* Widgets + Feed */}
-        <section className="grid grid-cols-1 lg:grid-cols-4 gap-5">
-          <div className="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-            {mockCategories.map((cat) => (
-              <CategoryCard key={cat.name} category={cat} />
+          {/* Tab navigation */}
+          <div className="flex items-center gap-0 relative z-10 self-end">
+            {["OVERVIEW", "ANALYSIS", "HISTORY", "SETTINGS"].map((tab, i) => (
+              <button
+                key={tab}
+                className={`px-4 py-2.5 font-heading text-[9px] tracking-[0.12em] transition-all ${
+                  i === 0
+                    ? "tab-active text-[#d4af37]"
+                    : "text-[#475569] hover:text-[#94a3b8] border-b-2 border-transparent"
+                }`}
+              >
+                {tab}
+              </button>
             ))}
           </div>
-          <div className="lg:col-span-1">
-            <LiveFeed events={mockLiveEvents} />
-          </div>
         </section>
 
+        <main className="px-5 py-5">
+          {/* Category score pills row */}
+          <div className="flex items-center gap-2 mb-5">
+            {mockCategories.map((cat) => {
+              const color = cat.score >= 70 ? "#d4af37" : cat.score >= 50 ? "#06b6d4" : "#ef4444";
+              return (
+                <div key={cat.name} className="card px-3 py-2 flex items-center gap-2">
+                  <span className="text-xs">{cat.emoji}</span>
+                  <span className="font-heading text-[7px] tracking-[0.12em] text-[#64748b]">{cat.name.toUpperCase()}</span>
+                  <span className="font-data text-[11px] font-bold" style={{ color }}>{cat.score}</span>
+                  <span className={`font-data text-[7px] font-bold ${cat.change >= 0 ? "text-[#22c55e]" : "text-[#ef4444]"}`}>
+                    {cat.change >= 0 ? "▲" : "▼"}{Math.abs(cat.change)}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Brief */}
+          <div className="mb-5">
+            <BriefCard brief={mockBrief} />
+          </div>
+
+          {/* Grid: Categories (9 cols) + Live Feed (3 cols) */}
+          <div className="grid grid-cols-12 gap-4">
+            {/* Categories — 9 cols, 3x2 grid */}
+            <div className="col-span-9 grid grid-cols-3 gap-4">
+              {mockCategories.map((cat) => (
+                <CategoryCard key={cat.name} category={cat} />
+              ))}
+            </div>
+
+            {/* Live Feed — 3 cols */}
+            <div className="col-span-3">
+              <LiveFeed events={mockLiveEvents} />
+            </div>
+          </div>
+        </main>
+
         {/* Footer */}
-        <footer className="border-t border-white/5 mt-16 pt-6 pb-4 flex items-center justify-between">
-          <span className="font-tech text-[9px] tracking-[0.2em] text-white/30 uppercase">
-            THE SIGNAL — AI MARKET INTELLIGENCE
-          </span>
-          <span className="font-tech text-[9px] tracking-[0.15em] text-white/20 uppercase">
-            NOT FINANCIAL ADVICE · DYOR
-          </span>
+        <footer className="border-t border-[#1e293b] px-5 py-3 flex items-center justify-between">
+          <span className="font-heading text-[8px] tracking-[0.2em] text-[#334155]">THE SIGNAL · AI MARKET INTELLIGENCE</span>
+          <div className="flex items-center gap-4">
+            <span className="font-data text-[8px] text-[#334155]">V0.1.0-MVP</span>
+            <span className="font-data text-[8px] text-[#334155]">NOT FINANCIAL ADVICE</span>
+          </div>
         </footer>
-      </main>
+      </div>
     </div>
   );
 }

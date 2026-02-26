@@ -3,64 +3,61 @@
 import { CategoryScore } from "@/lib/mock-data";
 
 function getScoreColor(score: number): string {
-  if (score >= 70) return "#adff00";
-  if (score >= 50) return "#00f2ff";
-  if (score >= 30) return "#ff00e5";
-  return "#ff0044";
+  if (score >= 70) return "#d4af37";
+  if (score >= 50) return "#06b6d4";
+  if (score >= 30) return "#f59e0b";
+  return "#ef4444";
 }
 
 function getSignalBadge(signal?: string) {
   if (!signal) return null;
-  const cls = signal === "bullish" ? "badge-bullish" : signal === "bearish" ? "badge-bearish" : "badge-neutral";
+  const styles = {
+    bullish: "bg-[#22c55e]/10 border-[#22c55e]/40 text-[#22c55e]",
+    bearish: "bg-[#ef4444]/10 border-[#ef4444]/40 text-[#ef4444]",
+    neutral: "bg-[#06b6d4]/10 border-[#06b6d4]/40 text-[#06b6d4]",
+  };
+  const labels = { bullish: "BUY", bearish: "SELL", neutral: "HOLD" };
   return (
-    <span className={`${cls} text-[8px] font-tech tracking-[0.15em] px-1.5 py-0.5 rounded-[2px]`}>
-      {signal === "bullish" ? "BUY" : signal === "bearish" ? "SELL" : "HOLD"}
+    <span className={`${styles[signal as keyof typeof styles]} font-data text-[7px] font-bold tracking-[0.1em] px-1.5 py-0.5 border rounded-[1px]`}>
+      {labels[signal as keyof typeof labels]}
     </span>
   );
 }
 
 export default function CategoryCard({ category }: { category: CategoryScore }) {
   const color = getScoreColor(category.score);
+  const pct = category.score;
 
   return (
-    <div className="glass p-5 group">
+    <div className="card p-4">
       {/* Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <span className="text-xl">{category.emoji}</span>
-          <div>
-            <h3 className="font-tech text-[11px] tracking-[0.2em] text-white uppercase">{category.name}</h3>
-            <p className="text-[10px] text-white/50 mt-0.5 font-mono uppercase tracking-wider">{category.description}</p>
-          </div>
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2.5">
+          <span className="text-base">{category.emoji}</span>
+          <h3 className="font-heading text-[10px] tracking-[0.15em] text-[#cbd5e1]">{category.name.toUpperCase()}</h3>
         </div>
-        <div className="flex flex-col items-end">
-          <span className="text-2xl font-display font-black" style={{ color }}>{category.score}</span>
-          <span className={`font-tech text-[9px] tracking-[0.2em] ${category.change >= 0 ? "text-[#adff00]" : "text-[#ff00e5]"}`}>
-            {category.change >= 0 ? "▲" : "▼"} {Math.abs(category.change)} PTS
+        <div className="flex items-center gap-2">
+          <span className="font-data text-lg font-bold" style={{ color }}>{category.score}</span>
+          <span className={`font-data text-[8px] font-bold ${category.change >= 0 ? "text-[#22c55e]" : "text-[#ef4444]"}`}>
+            {category.change >= 0 ? "▲" : "▼"}{Math.abs(category.change)}
           </span>
         </div>
       </div>
 
-      {/* Score bar */}
-      <div className="w-full h-[2px] bg-white/5 mb-5 overflow-hidden">
-        <div
-          className="h-full progress-gradient transition-all duration-1000"
-          style={{
-            width: `${category.score}%`,
-            boxShadow: `0 0 12px rgba(0, 242, 255, 0.3)`,
-          }}
-        />
+      {/* Progress bar */}
+      <div className="w-full h-[3px] bg-[#1e293b] mb-4">
+        <div className="h-full progress-gold transition-all duration-1000" style={{ width: `${pct}%` }} />
       </div>
 
       {/* Metrics */}
-      <div className="space-y-3">
+      <div className="space-y-0">
         {category.metrics.map((metric, i) => (
-          <div key={i} className="flex items-center justify-between row-hover rounded-[2px] px-2 py-1.5 -mx-2">
-            <span className="text-[11px] text-white/60 font-mono uppercase tracking-wide">{metric.label}</span>
-            <div className="flex items-center gap-2.5">
-              <span className="text-[12px] text-white font-mono font-medium">{metric.value}</span>
+          <div key={i} className="flex items-center justify-between row-hover px-2 py-[6px] -mx-2">
+            <span className="font-ui text-[9px] text-[#64748b] uppercase tracking-wide">{metric.label}</span>
+            <div className="flex items-center gap-2">
+              <span className="font-data text-[10px] text-white font-semibold">{metric.value}</span>
               {metric.change !== undefined && (
-                <span className={`font-tech text-[9px] tracking-wider ${metric.change >= 0 ? "text-[#adff00]" : "text-[#ff00e5]"}`}>
+                <span className={`font-data text-[8px] font-bold ${metric.change >= 0 ? "text-[#22c55e]" : "text-[#ef4444]"}`}>
                   {metric.change >= 0 ? "+" : ""}{metric.change}%
                 </span>
               )}

@@ -2,40 +2,36 @@
 
 import { LiveEvent } from "@/lib/mock-data";
 
-const typeStyles = {
-  bullish: { border: "border-[#adff00]/20", dot: "bg-[#adff00]", label: "text-[#adff00]" },
-  bearish: { border: "border-[#ff00e5]/20", dot: "bg-[#ff00e5]", label: "text-[#ff00e5]" },
-  neutral: { border: "border-[#00f2ff]/20", dot: "bg-[#00f2ff]", label: "text-[#00f2ff]" },
+const typeConfig = {
+  bullish: { border: "border-l-[#22c55e]", dot: "bg-[#22c55e]", tag: "text-[#22c55e]" },
+  bearish: { border: "border-l-[#ef4444]", dot: "bg-[#ef4444]", tag: "text-[#ef4444]" },
+  neutral: { border: "border-l-[#06b6d4]", dot: "bg-[#06b6d4]", tag: "text-[#06b6d4]" },
 };
 
 export default function LiveFeed({ events }: { events: LiveEvent[] }) {
   return (
-    <div className="glass p-5 sticky top-24">
-      <div className="flex items-center justify-between mb-5">
-        <h3 className="font-tech text-[11px] tracking-[0.2em] text-white uppercase">LIVE ANALYSIS</h3>
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-[#adff00] pulse-live" />
-          <span className="font-tech text-[9px] tracking-[0.3em] text-[#adff00]">LIVE</span>
+    <div className="card p-4 sticky top-16">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4 pb-3 border-b border-[#1e293b]">
+        <h3 className="font-heading text-[10px] tracking-[0.15em] text-[#cbd5e1]">LIVE ANALYSIS FEED</h3>
+        <div className="flex items-center gap-1.5">
+          <div className="w-[6px] h-[6px] rounded-full bg-[#22c55e] status-live" />
+          <span className="font-data text-[8px] font-bold text-[#22c55e] tracking-[0.2em]">LIVE</span>
         </div>
       </div>
 
-      <div className="space-y-2.5 max-h-[600px] overflow-y-auto pr-1">
+      <div className="space-y-2 max-h-[600px] overflow-y-auto">
         {events.map((event) => {
-          const styles = typeStyles[event.type];
+          const cfg = typeConfig[event.type];
           return (
-            <div
-              key={event.id}
-              className={`glass border ${styles.border} p-3 group/event`}
-            >
-              <div className="flex items-center gap-2 mb-2">
-                <div className={`w-1 h-1 rounded-full ${styles.dot}`} />
-                <span className="font-mono text-[9px] tracking-[0.15em] text-white/40 uppercase">{event.timestamp}</span>
-                <span className="text-white/10">·</span>
-                <span className={`font-tech text-[8px] tracking-[0.15em] ${styles.label} uppercase`}>{event.category}</span>
+            <div key={event.id} className={`bg-[#050a14] border-l-2 ${cfg.border} border-r border-t border-b border-r-[#1e293b] border-t-[#1e293b] border-b-[#1e293b] p-3 rounded-[1px]`}>
+              <div className="flex items-center gap-2 mb-1.5">
+                <div className={`w-1 h-1 rounded-full ${cfg.dot}`} />
+                <span className="font-data text-[8px] text-[#64748b] font-medium">{event.timestamp}</span>
+                <span className="text-[#1e293b]">|</span>
+                <span className={`font-heading text-[7px] tracking-[0.15em] ${cfg.tag}`}>{event.category.toUpperCase()}</span>
               </div>
-              <p className="text-[11px] text-white/70 leading-relaxed font-mono group-hover/event:text-white transition-colors">
-                {event.message}
-              </p>
+              <p className="font-ui text-[10px] text-[#94a3b8] leading-relaxed">{event.message}</p>
             </div>
           );
         })}
