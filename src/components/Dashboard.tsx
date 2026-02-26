@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import MetricCard from "@/components/MetricCard";
 import ScoreChart from "@/components/ScoreChart";
 import DonutChart from "@/components/DonutChart";
@@ -117,16 +118,16 @@ export default function Dashboard({ rawData, scores }: DashboardProps) {
         <nav className="flex-1 px-3 py-2">
           <p className="text-[10px] font-semibold text-[#6b6f7e] uppercase tracking-wider px-3 mb-2">General</p>
           {[
-            { icon: "📊", label: "Dashboard", active: true },
-            { icon: "📋", label: "Briefs", active: false },
-            { icon: "🔍", label: "Analysis", active: false },
-            { icon: "📡", label: "Live Feed", active: false },
+            { icon: "📊", label: "Dashboard", active: true, href: "/" },
+            { icon: "📋", label: "Briefs", active: false, href: "/briefs" },
+            { icon: "🔍", label: "Analysis", active: false, href: "#" },
+            { icon: "📡", label: "Live Feed", active: false, href: "#" },
           ].map((item) => (
-            <button key={item.label} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-[13px] transition-all ${
+            <Link key={item.label} href={item.href} className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg mb-0.5 text-[13px] transition-all ${
               item.active ? "sidebar-active font-semibold" : "text-[#a0a3b1] hover:bg-[#161921] hover:text-white"
             }`}>
               <span className="text-[14px]">{item.icon}</span>{item.label}
-            </button>
+            </Link>
           ))}
 
           <p className="text-[10px] font-semibold text-[#6b6f7e] uppercase tracking-wider px-3 mb-2 mt-6">Data</p>
