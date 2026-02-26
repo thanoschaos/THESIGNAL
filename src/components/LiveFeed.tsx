@@ -10,9 +10,9 @@ const typeStyles = {
 
 export default function LiveFeed({ events }: { events: LiveEvent[] }) {
   return (
-    <div className="glass rounded-lg p-5 sticky top-24">
+    <div className="glass p-5 sticky top-24">
       <div className="flex items-center justify-between mb-5">
-        <h3 className="font-tech text-[11px] tracking-[0.2em] text-white/90">LIVE ANALYSIS</h3>
+        <h3 className="font-tech text-[11px] tracking-[0.2em] text-white uppercase">LIVE ANALYSIS</h3>
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-[#adff00] pulse-live" />
           <span className="font-tech text-[9px] tracking-[0.3em] text-[#adff00]">LIVE</span>
@@ -25,15 +25,15 @@ export default function LiveFeed({ events }: { events: LiveEvent[] }) {
           return (
             <div
               key={event.id}
-              className={`glass border ${styles.border} rounded-md p-3 group/event`}
+              className={`glass border ${styles.border} p-3 group/event`}
             >
               <div className="flex items-center gap-2 mb-2">
                 <div className={`w-1 h-1 rounded-full ${styles.dot}`} />
-                <span className="font-tech text-[9px] tracking-[0.15em] text-white/30">{event.timestamp}</span>
+                <span className="font-mono text-[9px] tracking-[0.15em] text-white/40 uppercase">{event.timestamp}</span>
                 <span className="text-white/10">·</span>
-                <span className={`font-tech text-[8px] tracking-[0.15em] ${styles.label}`}>{event.category.toUpperCase()}</span>
+                <span className={`font-tech text-[8px] tracking-[0.15em] ${styles.label} uppercase`}>{event.category}</span>
               </div>
-              <p className="text-[11px] text-white/60 leading-relaxed font-mono group-hover/event:text-white/80 transition-colors">
+              <p className="text-[11px] text-white/70 leading-relaxed font-mono group-hover/event:text-white transition-colors">
                 {event.message}
               </p>
             </div>
