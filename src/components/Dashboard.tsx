@@ -8,6 +8,7 @@ import DonutChart from "@/components/DonutChart";
 import ProgressList from "@/components/ProgressList";
 import InsightsFeed from "@/components/InsightsFeed";
 import YieldsTable from "@/components/YieldsTable";
+import LeverageSection from "@/components/LeverageSection";
 import { SkeletonCard, SkeletonChart, SkeletonTable } from "@/components/Skeleton";
 
 interface DashboardProps {
@@ -21,6 +22,16 @@ interface DashboardProps {
     trending: { address: string; chain: string }[] | null;
   };
   scores: Record<string, { score: number; metrics: { label: string; value: string; change?: number; signal: string }[] }>;
+  derivatives?: {
+    score: number;
+    bias: string;
+    analysis: string;
+    fundingSignal: string;
+    takerSignal: string;
+    metrics: { label: string; value: string; signal: string }[];
+    longShortHistory: number[];
+    topCoins: { symbol: string; fundingRate: number; openInterest: number }[];
+  } | null;
 }
 
 function fmt(n: number): string {
@@ -43,7 +54,7 @@ function getRelativeTime(date: Date): string {
   return `${diffDays}d ago`;
 }
 
-export default function Dashboard({ rawData, scores }: DashboardProps) {
+export default function Dashboard({ rawData, scores, derivatives }: DashboardProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [lastUpdated] = useState(new Date());
   
@@ -332,6 +343,13 @@ export default function Dashboard({ rawData, scores }: DashboardProps) {
             </div>
             <DonutChart data={catDistribution} />
           </div>
+
+          {/* Leverage & Positioning */}
+          {derivatives && (
+            <div className="mb-4">
+              <LeverageSection data={derivatives} />
+            </div>
+          )}
 
           {/* Bottom: Yields + Insights */}
           <div ref={degenfiRef} className="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
